@@ -1,0 +1,99 @@
+.navbar-wagon {
+    box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
+    background: white;
+    transition: all 0.3s ease;
+    display: flex;
+    height: 70px;
+    align-items: center;
+  }
+  
+/* Optional class to fix the navbar on top */
+.navbar-wagon-fixed {
+  /*position: fixed;*/
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+}
+.temp {
+    padding-right: 2rem;
+}
+
+.hp-header{
+  /*background-image: linear-gradient(-225deg, rgba(0,78,146,0.65) 0%, rgba(0,12,64,0.65) 20%),url(/assets/background-developers-129e8c6e11aa36b3354666532ea81512e9a6462bfc873126181365ab91657eac.jpg);*/
+  background-size: cover;
+  /*display: flex;*/
+  align-items: center;
+  background-attachment: fixed;
+  padding: 10px;
+}
+
+.if-theme{
+  background-color: #195128;
+  background-image: radial-gradient(ellipse at center,#17882c 1%,#00510f 100%);
+  background-image: -webkit-gradient(radial,center center,0,center center,100%,color-stop(1%,#17882c),color-stop(100%,#00510f));
+  background-image: -webkit-radial-gradient(center,ellipse cover,#17882c 1%,#00510f 100%);
+  color: #fff;
+}
+
+.backgroundIMG{
+  background-image: url(/public/soraSaganoBg.jpg);
+}
+.background{
+  background-color: rgb(243, 253, 253, 0.6);
+}
+
+.home-text h3{
+  text-align: left;
+  margin-top: 2rem;
+  margin-right: 8rem;
+}
+
+.home-generic-text{
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 8rem;
+  margin-left: 1rem;
+}
+
+.home-bottom{
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.card-layout{
+  margin-bottom: 1rem;
+}
+
+.searchBar{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.paginationBttns {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 4px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #2b2eff;
+  color: #2b2eff;
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: #2b2eff;
+}
+
+.paginationActive a {
+  color: white;
+  background-color: #2b2eff;
+}
