@@ -11,9 +11,8 @@ function CandidateQuery() {
     const [bdData, setData] = useState([])
 
     const submitQuerry = () => { 
-        axios.get(`http://localhost:5000/database/search?name=${description}&description=${description}`).then(function (response) {
+        axios.get(`http://localhost:5000/database/search?dataDescripion=${description}`).then(function (response) {
             setData(response.data.slice(0,50))
-            console.log(response.data)
             setSearchFlag(true)
         }).catch( function (error){
             console.log(error);
@@ -34,13 +33,14 @@ function CandidateQuery() {
 
     const displayUsers = bdData.slice(pagesVisited, pagesVisited + usersPerPage).map((value) =>{
         return (
-        <a href={"/candidate/details/" + value.id} className="list-group-item list-group-item-action flex-column align-items-start card-layout">
+        <a href={"/candidate/details/" + value.user_id} 
+        className="list-group-item list-group-item-action flex-column align-items-start card-layout" key={value.user_id}>
             <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{value.description}</h5>
+                <h5 className="mb-1">{value.full_name}</h5>
                 <small className="text-muted">3 days ago</small>
             </div>
-            <p className="mb-1">{value.name}</p>
-            <small className="text-muted">{value.email}</small>
+            <p className="mb-1">{value.description}</p>
+            <small className="text-muted">{value.user_email}</small>
         </a>)
     })
 

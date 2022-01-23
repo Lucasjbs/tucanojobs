@@ -1,8 +1,6 @@
 const express = require('express')
 const app = express()
 
-const { candidates } = require('./candidates')
-
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
@@ -46,43 +44,15 @@ app.get("/", async (req, res) => {
     }
 })
 
-app.get("/database/search", (req, res) => {
-    const { name, description } = req.query
-    let nameCandidates = [...candidates]
-    let descCandidates = [...candidates]
-
-    if (name) {
-        nameCandidates = nameCandidates.filter((data) => {
-            return data.name.includes(name)
-        })
+app.get("/database/search", async (req, res) => {
+    const { dataDescripion } = req.query
+    try {
+        const fullData = await pool.query(`SELECT * FROM "candidateUsers" WHERE user_tags LIKE $1`, ["%" + dataDescripion + "%"])
+        res.send(fullData.rows)
+        
+    } catch (error) {
+        res.send(error)
     }
-    
-    if (description) {
-        descCandidates = descCandidates.filter((data) => {
-            return data.description.includes(description)
-        })
-    }
-    
-    let sortedCandidates = nameCandidates.concat(descCandidates)
-    
-    if (nameCandidates.length==[...candidates].length) sortedCandidates = nameCandidates
-
-    if (sortedCandidates.length < 1) {
-        return res.send("<h3> There's no candidates with this name or description!</h3>")
-    }
-    
-    // const searchPage = 
-    // "<h2> Welcome to the SEARCH page! </h2>" + 
-    // "<h3> Showing the selected candidates: </h3>"
-    
-    // let candidateList = ""
-    //  function displayForEachObj(data){
-    //      candidateList =  `${candidateList}<p>The user ${data.name} is ${data.age} years old, and has an ID of ${data.id}!</p>`
-    // }
-    // sortedCandidates.forEach(displayForEachObj);
-    
-    // res.send(searchPage+candidateList)
-    res.send(sortedCandidates)
 })
 
 app.get("/candidate/details/:id", async (req, res) => {
