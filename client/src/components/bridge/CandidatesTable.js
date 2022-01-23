@@ -1,6 +1,7 @@
 import React, { useEffect, useState }  from 'react'
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
 
 
 //HOME PAGE
@@ -26,14 +27,15 @@ function CandidatesTable() {
                         {bdData.map((value, index) =>{
                             if(index < 5){
                                 return (
-                                <a href={"/candidate/details/" + value.id} className="list-group-item list-group-item-action flex-column align-items-start card-layout">
+                                <Link to={"/candidate/details/" + value.user_id} 
+                                className="list-group-item list-group-item-action flex-column align-items-start card-layout" key={value.user_id}>
                                     <div className="d-flex w-100 justify-content-between">
-                                        <h5 className="mb-1">{value.description}</h5>
+                                        <h5 className="mb-1">{value.full_name}</h5>
                                         <small className="text-muted">3 days ago</small>
                                     </div>
-                                    <p className="mb-1">{value.name}</p>
-                                    <small className="text-muted">{value.email}</small>
-                                </a>)
+                                    <p className="mb-1">{value.description}</p>
+                                    <small className="text-muted">{value.user_email}</small>
+                                </Link>)
                                 }
                             })}
 
@@ -70,14 +72,15 @@ export function CandidatesAll(){
 
     const displayUsers = bdData.slice(pagesVisited, pagesVisited + usersPerPage).map((value) =>{
         return (
-        <a href={"/candidate/details/" + value.id} className="list-group-item list-group-item-action flex-column align-items-start card-layout">
+        <Link to={"/candidate/details/" + value.user_id} 
+        className="list-group-item list-group-item-action flex-column align-items-start card-layout" key={value.user_id}>
             <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{value.description}</h5>
+                <h5 className="mb-1">{value.full_name}</h5>
                 <small className="text-muted">3 days ago</small>
             </div>
-            <p className="mb-1">{value.name}</p>
-            <small className="text-muted">{value.email}</small>
-        </a>)
+            <p className="mb-1">{value.description}</p>
+            <small className="text-muted">{value.user_email}</small>
+        </Link>)
     })
 
     return (

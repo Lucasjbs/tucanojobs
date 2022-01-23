@@ -1,16 +1,17 @@
 import React, { useEffect, useState }  from 'react'
 import axios from 'axios';
 import CompanyFavList from '../bridge/CompanyFavList';
+import { useParams } from 'react-router-dom';
 
 function CandidateDetails() {
+    const id = useParams().id
 
     const [bdData, setData] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const id = 3
         axios.get(`http://localhost:5000/candidate/details/${id}`).then(function (response) {
-            setData(response.data)
+            setData(response.data[0])
             setLoading(false)
         }).catch( function (error){
             console.log(error);
@@ -39,12 +40,12 @@ function CandidateDetails() {
             <div className="home-generic-text">
                 <h4>Detalhes do candidato:</h4>
                 <h4>Nome: </h4>
-                <h5 className="mb-1">{bdData[0].name}</h5>
+                <h5 className="mb-1">{bdData.full_name}</h5>
 
                 <h4>Email: </h4>
-                <h5 className="mb-1">{bdData[0].email}</h5>
+                <h5 className="mb-1">{bdData.user_email}</h5>
 
-                <CompanyFavList id={bdData[0].id}></CompanyFavList>
+                <CompanyFavList id={bdData.user_id}></CompanyFavList>
             </div>
             
 

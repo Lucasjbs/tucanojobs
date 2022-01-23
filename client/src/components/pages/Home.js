@@ -1,5 +1,6 @@
 import React from 'react'
 import CandidatesTable from "../bridge/CandidatesTable"
+import { Link } from 'react-router-dom';
 
 function Home() {
 
@@ -9,7 +10,7 @@ function Home() {
                 <div className="if-theme hp-header home-text">
                     <h3>Aqui você encontra programadores e desenvolvedores recém graduados na área de <i>Tecnologia da Informação</i>.</h3>
                     <br></br>
-                    <a className="btn btn-info" href="/candidates" role="button">Ver Candidatos</a>
+                    <Link to={"/candidates"} className="btn btn-info" role="button">Ver Candidatos</Link>
                     <br></br>
                     <br></br>
                     <i>Veja a lista de candidatos do site, e encontre o desenvolvedor na linguagem que você precisa.</i>
