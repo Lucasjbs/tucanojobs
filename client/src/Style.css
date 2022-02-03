@@ -103,3 +103,10 @@
   background-color: rgba(0,0,0, 0.5);
   text-align: center;
 }
+
+.video-hidden{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  visibility: hidden
+}

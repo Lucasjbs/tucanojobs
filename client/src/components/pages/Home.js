@@ -42,7 +42,7 @@ function Home() {
                 </div>
 
                 <div className='home-bottom'>
-                    <h3> Este site foi construído através de um projeto do Instituto Federal de Educação, Ciência e 
+                    <h3>Este site foi construído através de um projeto do Instituto Federal de Educação, Ciência e 
                         Tecnologia do Sul de Minas - CAMPUS POÇOS DE CALDAS</h3>
                         <img src="http://localhost:3000/logoif.png" 
                 alt="IF Logo"></img>

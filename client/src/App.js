@@ -15,7 +15,10 @@ import Login from './components/pages/Login';
 import RegisterCandidate from './components/bridge/RegisterCandidate';
 import EditCandidateInfo from './components/bridge/EditCandidateInfo';
 import DeleteAccount from './components/bridge/DeleteAccount';
-//import Submit from './components/Submit';
+
+import { FileUploader } from './components/fileUploader/PdfUploader';
+import PdfDownloader from './components/fileUploader/PdfDownloader';
+import YouTube from './components/fileUploader/YouTube';
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
           <Route path='/worker/login' element={<Login />}></Route>
           <Route path='/candidate/edit' element={<EditCandidateInfo />}></Route>
           <Route path='/candidate/delete' element={<DeleteAccount />}></Route>
+          <Route path='/uploader' element={<FileUploader />}></Route>
+          <Route path='/downloader' element={<PdfDownloader />}></Route>
+          <Route path='/ytview' element={<YouTube />}></Route>
           <Route path='*' element={<Home/>} />
         </Routes>
         <Footer />

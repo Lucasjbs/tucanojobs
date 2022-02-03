@@ -1,6 +1,7 @@
 import React, { useEffect, useState }  from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ReactPlayer from 'react-player'
 
 function EditCandidateInfo() {
     let navigate = useNavigate()
@@ -17,11 +18,29 @@ function EditCandidateInfo() {
     const [institution, setInstitution] = useState([])
     const [location, setLocation] = useState([])
     const [dataTags, setDataTags] = useState([])
-    
-    //const [profilePicture, setProfilePicture] = useState([])
-    //const [pdfLink, setPdfLink] = useState([])
-    //const [ytLink, setYtLink] = useState([])
 
+    const [fileWarning, setFileWarning] = useState("")
+    const [file, setFile] = useState([])
+    const [videoWarning, setVideoWarning] = useState("")
+    const [videoUrl, setVideoUrl] = useState("")
+
+    const onDurationHandler = state => {
+        if(state <= 180) setVideoWarning("A duração do vídeo é VALIDA!")
+        else setVideoWarning("A duração do vídeo é INVALIDA!")
+    }
+  
+    const onInputChange = (e) => {
+        setFile(e.target.files)
+
+        const fileTemp = e.target.files
+
+        if(fileTemp[0].size > 300 * 1024) 
+            setFileWarning("O tamanho máximo é 300KB!")
+        else if(fileTemp[0].type !== "application/pdf")
+            setFileWarning("O arquivo deve estar no formato pdf!")
+        else
+            setFileWarning("")
+    };
 
     useEffect(() => {
         axios.get(`http://localhost:5000/profile`, {
@@ -40,6 +59,7 @@ function EditCandidateInfo() {
                 setInstitution(response.data.user_institution || "Ex: Instituto Federal do Sul de Minas")
                 setLocation(response.data.user_location || "Ex: Poços de Caldas, Minas Gerais")
                 setDataTags(response.data.user_tags || "Ex: Javascript, PHP, Java")
+                setVideoUrl(response.data.youtube_link || "Ex: https://www.youtube.com/watch?v=p2vpqKBPj4U")
                 
                 setLoading(false)
             }
@@ -62,12 +82,22 @@ function EditCandidateInfo() {
         else if(phoneNumber.length<4 || phoneNumber.includes("Ex: "))
             setWarningLabel("O número de telefone é um campo obrigatório!")
         else{
+            if(file.length>0 && file[0].size < 300 * 1024 && file[0].type === "application/pdf"){
+                const data = new FormData();
+                for(let i = 0; i < file.length; i++) {
+                    data.append('file', file[i]);
+                }
+
+                axios.post(`http://localhost:5000/upload/${bdData.user_name}`, data)
+            }
             let valueI = institution
             let valueL = location
             let valueT = dataTags
+            let valueY = videoUrl
             if(institution.includes("Ex: ")) valueI = ""
             if(location.includes("Ex: ")) valueL = ""
             if(dataTags.includes("Ex: ")) valueT = ""
+            if(videoUrl.includes("Ex: ") || videoWarning.includes("A duração do vídeo é INVALIDA!")) valueY = ""
 
             let dateValue = new Date()
             dateValue = dateValue.toISOString().split('T')[0]
@@ -84,6 +114,7 @@ function EditCandidateInfo() {
                 user_institution: valueI,
                 user_location: valueL,
                 user_tags: valueT,
+                youtube_link: valueY,
                 token: localStorage.getItem('token')
             }).then(function (response) {
                 if(response.data==="Success")
@@ -131,25 +162,52 @@ function EditCandidateInfo() {
             aria-describedby="search-addon" onChange={(e) => {setDataEmail(e.target.value)}}/>
 
             <label>Digite seu telefone/celular:</label>
-            <input type="email" className="form-control rounded" value={phoneNumber} aria-label="Pesquisar"
+            <input type="text" className="form-control rounded" value={phoneNumber} aria-label="Pesquisar"
             aria-describedby="search-addon" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
 
             <label>Escreva um resumo sobre você:</label>
-            <textarea type="email" className="form-control rounded" placeholder="" aria-label="Pesquisar"
+            <textarea type="text" className="form-control rounded" placeholder="" aria-label="Pesquisar"
             aria-describedby="search-addon" onChange={(e) => {setDescription(e.target.value)}}/>
 
             <label>Escreva o nome da sua instituição de ensino:</label>
-            <input type="email" className="form-control rounded" value={institution} aria-label="Pesquisar"
+            <input type="text" className="form-control rounded" value={institution} aria-label="Pesquisar"
             aria-describedby="search-addon" onChange={(e) => {setInstitution(e.target.value)}}/>
 
             <label>Digite sua localização:</label>
-            <input type="email" className="form-control rounded" value={location} aria-label="Pesquisar"
+            <input type="text" className="form-control rounded" value={location} aria-label="Pesquisar"
             aria-describedby="search-addon" onChange={(e) => {setLocation(e.target.value)}}/>
 
             <label>Digite quais linguagens de programação você domina:</label>
-            <input type="email" className="form-control rounded" value={dataTags} aria-label="Pesquisar"
+            <input type="text" className="form-control rounded" value={dataTags} aria-label="Pesquisar"
             aria-describedby="search-addon" onChange={(e) => {setDataTags(e.target.value)}}/>
 
+            <br></br>
+
+            <div className="form-group">
+              <label>Envie seu currículo no formato PDF e com no máximo 300KB:</label>
+              <input type="file"
+                     onChange={onInputChange}
+                     className="form-control"
+                     multiple/>
+            </div>
+
+            <label className="danger-txt">{fileWarning}</label>
+
+            <br></br>
+
+            <ReactPlayer
+                url={videoUrl}
+                className='video-hidden'
+                onDuration={onDurationHandler}
+            />
+            
+            <label>Envie o link do seu vídeo do YouTube com no máximo 3 minutos:</label>
+
+            <input type="text" className="form-control rounded" value={videoUrl}
+            onChange={(e) => {setVideoUrl(e.target.value)}}/>
+
+            <label className="danger-txt">{videoWarning}</label>
+            
             <br></br>
 
             <label className="danger-txt">{warningLabel}</label>

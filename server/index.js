@@ -4,6 +4,11 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+const multer = require('multer');
+app.use(express.static('public'));
+
+const fs = require('fs')
+
 const cors = require("cors");
 app.use(cors({
         origin: ["http://localhost:3000"],
@@ -139,8 +144,6 @@ const profileAuthentication = async (req, res, next) => {
                 user_location: fullData.rows[0].user_location,
                 resume_date: fullData.rows[0].resume_date,
                 user_tags: fullData.rows[0].user_tags,
-                profile_picture: fullData.rows[0].profile_picture,
-                pdf_link: fullData.rows[0].pdf_link,
                 youtube_link: fullData.rows[0].youtube_link,
                 resume_validation: fullData.rows[0].resume_validation
             }
@@ -275,8 +278,8 @@ app.put("/database/:name", async (req, res) => {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, result) => {
             if(err) res.send("Invalid token")
             else{
-                pool.query('UPDATE "candidateUsers" SET full_name=$1, user_title=$2, user_email=$3, phone_number=$4, description=$5, resume_date=$6, user_institution=$7, user_location=$8, user_tags=$9, resume_validation=$10 WHERE user_name=$11;', 
-                [dataNew.full_name, dataNew.user_title, dataNew.user_email, dataNew.phone_number, dataNew.description, dataNew.resume_date, dataNew.user_institution, dataNew.user_location, dataNew.user_tags, true, dataValue.name], (err, result) =>{
+                pool.query('UPDATE "candidateUsers" SET full_name=$1, user_title=$2, user_email=$3, phone_number=$4, description=$5, resume_date=$6, user_institution=$7, user_location=$8, user_tags=$9, resume_validation=$10, youtube_link=$11 WHERE user_name=$12;', 
+                [dataNew.full_name, dataNew.user_title, dataNew.user_email, dataNew.phone_number, dataNew.description, dataNew.resume_date, dataNew.user_institution, dataNew.user_location, dataNew.user_tags, true, dataNew.youtube_link, dataValue.name], (err, result) =>{
                     if(err) res.send(err)
                     else res.send("Success")
                 });
@@ -311,6 +314,49 @@ const profileDelete = async (req, res, next) => {
 app.delete("/database", profileDelete, (req, res) => {
     
 })
+
+//FILES
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'pdf_files')
+    },
+    filename: (req, file, cb) => {
+        cb(null, "cv_" + req.params.name + ".pdf")
+    }
+});
+
+const upload = multer({storage}).single('file');
+
+
+app.post('/upload/:name', (req, res) => {
+
+    upload(req, res, (err) => {
+        if (err) {
+            return res.json(err)
+        }
+        return res.status(200).send(req.file)
+    })
+});
+
+const download = (req, res, next) => {
+    console.log('fileController.download: started')
+    const path = "./pdf_files/" + req.params.name
+    const file = fs.createReadStream(path)
+
+    file.on('error', function(err) {
+        console.log(err)
+        res.send("ENOENT")
+    });
+      
+    const filename = "profile"
+    res.setHeader('Content-Disposition', 'attachment: filename="' + filename + '"')
+    file.pipe(res)
+  }
+
+app.get('/download/:name', download, (req, res) => {
+    //res.download("./pdf_files/1643589347989-lucasjbastos.pdf")
+});
 
 app.listen(5000, () => {
     console.log('Server is online on port 5000...')
