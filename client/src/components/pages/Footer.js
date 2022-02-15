@@ -11,9 +11,9 @@ function Footer() {
 
                 <section className="mb-4">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
-                    repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
-                    eum harum corrupti dicta, aliquam sequi voluptate quas.
+                    Este site criado por Lucas Junqueira Bastos como um projeto para a faculdade de 
+                    Engenharia da Computação. O código deste e outros projetos podem ser encontrados 
+                    no <a href='https://github.com/Lucasjbs'>GitHub</a>.
                 </p>
                 </section>
 
@@ -25,16 +25,13 @@ function Footer() {
 
                     <ul className="list-unstyled mb-0">
                         <li>
-                        <a href="#!" className="text-white">Sobre nós</a>
+                        <a href="/aboutus" className="text-white">Sobre nós</a>
                         </li>
                         <li>
-                        <a href="#!" className="text-white">Perguntas frequentes</a>
+                        <a href="/questions" className="text-white">Perguntas frequentes</a>
                         </li>
                         <li>
-                        <a href="#!" className="text-white">Como enviar proposta</a>
-                        </li>
-                        <li>
-                        <a href="#!" className="text-white">Como contratar</a>
+                        <a href="/talktous" className="text-white">Fale conosco</a>
                         </li>
                     </ul>
                     </div>
@@ -44,16 +41,13 @@ function Footer() {
 
                     <ul className="list-unstyled mb-0">
                         <li>
-                        <a href="#!" className="text-white">Programador Java</a>
+                        <a href="/candidate/searchby/PHP" className="text-white">Programador PHP</a>
                         </li>
                         <li>
-                        <a href="#!" className="text-white">Programador PHP</a>
+                        <a href="/candidate/searchby/Javascript" className="text-white">Programador JavaScript</a>
                         </li>
                         <li>
-                        <a href="#!" className="text-white">Programador JavaScript</a>
-                        </li>
-                        <li>
-                        <a href="#!" className="text-white">Programador C#</a>
+                        <a href="/candidate/searchby/ReactJs" className="text-white">Desenvolvedor ReactJs</a>
                         </li>
                     </ul>
                     </div>

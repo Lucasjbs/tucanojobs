@@ -64,6 +64,8 @@
 
 .card-layout{
   margin-bottom: 1rem;
+  border-color: gray;
+  border-width: 3px;
 }
 
 .searchBar{
@@ -109,4 +111,36 @@
   width: 1px;
   height: 1px;
   visibility: hidden
+}
+
+.video-style{
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.questionsBG{
+  background-color: rgba(0,0,0, 0.6);
+  color: rgb(215, 215, 215);
+}
+
+.candidateDisplay{
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.btnRight{
+  float: right;
 }

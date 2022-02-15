@@ -41,7 +41,7 @@ require('dotenv').config()
 
 app.get("/", async (req, res) => {
     try {
-        const fullData = await pool.query('SELECT user_id, user_name, full_name, user_title, user_email, phone_number, description, resume_date, user_institution, user_location, user_tags, resume_validation FROM "candidateUsers"')
+        const fullData = await pool.query('SELECT user_id, user_name, full_name, user_title, user_email, phone_number, description, resume_date, user_institution, user_location, user_tags, resume_validation, youtube_link FROM "candidateUsers" WHERE resume_validation=true ORDER BY resume_date DESC')
         res.send(fullData.rows)
         
     } catch (error) {
@@ -52,7 +52,7 @@ app.get("/", async (req, res) => {
 app.get("/database/search", async (req, res) => {
     const { dataDescripion } = req.query
     try {
-        const fullData = await pool.query(`SELECT * FROM "candidateUsers" WHERE user_tags LIKE $1`, ["%" + dataDescripion + "%"])
+        const fullData = await pool.query(`SELECT user_id, user_name, full_name, user_title, user_email, phone_number, description, resume_date, user_institution, user_location, user_tags, resume_validation, youtube_link FROM "candidateUsers" WHERE user_tags LIKE $1 AND resume_validation=true ORDER BY resume_date DESC`, ["%" + dataDescripion + "%"])
         res.send(fullData.rows)
         
     } catch (error) {
@@ -64,7 +64,7 @@ app.get("/candidate/details/:id", async (req, res) => {
     const { id } = req.params
     
     try {
-        const fullData = await pool.query('SELECT user_id, user_name, full_name, user_title, user_email, phone_number, description, resume_date, user_institution, user_location, user_tags, resume_validation FROM "candidateUsers" WHERE user_id=$1', [id])
+        const fullData = await pool.query('SELECT user_id, user_name, full_name, user_title, user_email, phone_number, description, resume_date, user_institution, user_location, user_tags, resume_validation, youtube_link FROM "candidateUsers" WHERE user_id=$1', [id])
         res.send(fullData.rows)
         
     } catch (error) {
@@ -188,9 +188,12 @@ app.post("/register", async (req, res) => {
         
         else if(search_result==="User do not exist!"){
 
+            let dateValue = new Date()
+            dateValue = dateValue.toISOString().split('T')[0]
+
             pool.query('SELECT * FROM "candidateUsers" WHERE user_name=$1', [userName], (err, result) =>{
                     bcrypt.hash(password, saltRounds, (err, hash) => {
-                        pool.query('INSERT INTO "candidateUsers" (user_name, user_password, resume_validation) VALUES($1, $2, $3) RETURNING *', [userName, hash, false]);
+                        pool.query('INSERT INTO "candidateUsers" (user_name, user_password, resume_validation, resume_date) VALUES($1, $2, $3, $4) RETURNING *', [userName, hash, false, dateValue]);
                     })
             });
             const new_result = await getUserData(userName)
@@ -201,7 +204,6 @@ app.post("/register", async (req, res) => {
                     user_password: new_result.user_password
                 })
             res.send({token: jwtToken})
-            //res.send("Welcome " + new_result.user_name + "! Your id number is: " + new_result.user_id + "!")
         }
         else res.send("User already exist!")
     }

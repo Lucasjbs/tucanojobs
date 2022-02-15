@@ -9,6 +9,13 @@ function CandidatesTable() {
 
     const [bdData, setData] = useState([])
 
+    function dateConverter(date){
+        let formatDate = date.split('T')[0]
+        const ddMMYY = formatDate.split('-')
+        formatDate = ddMMYY[2] + "/" + ddMMYY[1] + "/" + ddMMYY[0]
+        return formatDate
+    }
+
     useEffect(() => {
         axios.get("http://localhost:5000/").then(function (response) {
             setData(response.data)
@@ -31,10 +38,10 @@ function CandidatesTable() {
                                 className="list-group-item list-group-item-action flex-column align-items-start card-layout" key={value.user_id}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{value.full_name}</h5>
-                                        <small className="text-muted">3 days ago</small>
+                                        <small className="text-muted">{dateConverter(value.resume_date)}</small>
                                     </div>
-                                    <p className="mb-1">{value.description}</p>
-                                    <small className="text-muted">{value.user_email}</small>
+                                    <p className="mb-1">{value.user_title}</p>
+                                    <small className="text-muted">{value.user_tags}</small>
                                 </Link>)
                                 }
                             })}
@@ -50,6 +57,13 @@ function CandidatesTable() {
 //PAGINATION
 export function CandidatesAll(){
     const [bdData, setData] = useState([])
+
+    function dateConverter(date){
+        let formatDate = date.split('T')[0]
+        const ddMMYY = formatDate.split('-')
+        formatDate = ddMMYY[2] + "/" + ddMMYY[1] + "/" + ddMMYY[0]
+        return formatDate
+    }
 
     useEffect(() => {
         axios.get("http://localhost:5000/").then(function (response) {
@@ -74,12 +88,12 @@ export function CandidatesAll(){
         return (
         <Link to={"/candidate/details/" + value.user_id} 
         className="list-group-item list-group-item-action flex-column align-items-start card-layout" key={value.user_id}>
-            <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{value.full_name}</h5>
-                <small className="text-muted">3 days ago</small>
-            </div>
-            <p className="mb-1">{value.description}</p>
-            <small className="text-muted">{value.user_email}</small>
+        <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">{value.full_name}</h5>
+            <small className="text-muted">{dateConverter(value.resume_date)}</small>
+        </div>
+        <p className="mb-1">{value.user_title}</p>
+        <small className="text-muted">{value.user_tags}</small>
         </Link>)
     })
 

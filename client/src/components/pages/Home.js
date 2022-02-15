@@ -19,12 +19,14 @@ function Home() {
                 </div>
 
                 <div className="home-generic-text">
-                    <h4>Procure os programadores na linguagem de programação desejada, ou cadastre já o seu currículo 
-                        para se candidatar as vagas!</h4>
-                    <h3>Lista dos últimos candidatos: </h3>
+                    <h5>Procure os programadores na linguagem de programação desejada, ou cadastre já o seu currículo 
+                        para se candidatar as vagas!</h5>
+                    <h4>Lista dos candidatos mais recentes: </h4>
                 </div>
 
                 <CandidatesTable></CandidatesTable>
+
+                <br></br>
 
                 <div className="container">
                     <div className='row'>
@@ -33,7 +35,7 @@ function Home() {
                             email para nós através do <a href='/talktous'>fale conosco</a>!</h5>
                         </div>
                         <div className='col-sm-4'>
-                            <h5>Busque pelos programadores na área que você precisa através do filtro da lista de candidatos</h5>
+                            <h5>Busque pelos programadores na área que você precisa através do filtro da lista de candidatos!</h5>
                         </div>
                         <div className='col-sm-4'>
                             <h5>Plataforma 100% dedicada à programadores e desenvolvedores!</h5>
@@ -41,12 +43,17 @@ function Home() {
                     </div>
                 </div>
 
+                <br></br>
+                <hr></hr>
+
                 <div className='home-bottom'>
                     <h3>Este site foi construído através de um projeto do Instituto Federal de Educação, Ciência e 
                         Tecnologia do Sul de Minas - CAMPUS POÇOS DE CALDAS</h3>
                         <img src="http://localhost:3000/logoif.png" 
                 alt="IF Logo"></img>
                 </div>
+                
+                <br></br>
                 
             </div>
         </React.Fragment>

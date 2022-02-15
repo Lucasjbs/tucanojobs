@@ -18,10 +18,10 @@ function Navbar() {
         })
     }, [])
 
-    const logOff = () =>(
-        localStorage.clear(),
+    const logOff = () =>{
+        localStorage.clear()
         window.location.replace('/')
-    )
+    }
 
     if(login){
         return (
@@ -74,24 +74,13 @@ function Navbar() {
                         <li className="nav-item active">
                             <Link to={"/candidates"} className="nav-link">Ver Candidatos<span className="sr-only">(current)</span></Link>
                         </li>
-        
-                        <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
-                            aria-haspopup="true" aria-expanded="false">Login
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link to={"/worker/login"} className="dropdown-item">Como Programador</Link>
-                                <Link to={"/company/login"} className="dropdown-item">Como Empregador</Link>
-                            </div>
+
+                        <li className="nav-item active">
+                            <Link to={"/worker/login"} className="nav-link">Login<span className="sr-only">(current)</span></Link>
                         </li>
-                        <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
-                            aria-haspopup="true" aria-expanded="false">Cadastrar-se
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link to={"/worker/register"} className="dropdown-item">Como Programador</Link>
-                                <Link to={"/company/register"} className="dropdown-item">Como Empregador</Link>
-                            </div>
+
+                        <li className="nav-item active">
+                            <Link to={"/worker/register"} className="nav-link">Cadastrar-se<span className="sr-only">(current)</span></Link>
                         </li>
                         </ul>
                     </div>

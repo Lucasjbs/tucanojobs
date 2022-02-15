@@ -11,14 +11,14 @@ import CandidatePage from './components/pages/CandidatePage';
 import CandidateDetails from './components/pages/CandidateDetails';
 import ProfileCandidate from './components/pages/ProfileCandidate';
 import Login from './components/pages/Login';
+import Questions from './components/pages/Questions';
+import TalktoUs from './components/pages/TalktoUs';
+import AboutUs from './components/pages/AboutUs';
 
 import RegisterCandidate from './components/bridge/RegisterCandidate';
 import EditCandidateInfo from './components/bridge/EditCandidateInfo';
 import DeleteAccount from './components/bridge/DeleteAccount';
-
-import { FileUploader } from './components/fileUploader/PdfUploader';
-import PdfDownloader from './components/fileUploader/PdfDownloader';
-import YouTube from './components/fileUploader/YouTube';
+import QueryLinked from './components/bridge/QueryLinked';
 
 function App() {
   return (
@@ -34,9 +34,10 @@ function App() {
           <Route path='/worker/login' element={<Login />}></Route>
           <Route path='/candidate/edit' element={<EditCandidateInfo />}></Route>
           <Route path='/candidate/delete' element={<DeleteAccount />}></Route>
-          <Route path='/uploader' element={<FileUploader />}></Route>
-          <Route path='/downloader' element={<PdfDownloader />}></Route>
-          <Route path='/ytview' element={<YouTube />}></Route>
+          <Route path='/questions' element={<Questions />}></Route>
+          <Route path='/talktous' element={<TalktoUs />}></Route>
+          <Route path='/aboutus' element={<AboutUs />}></Route>
+          <Route path='/candidate/searchby/:tag' element={<QueryLinked />} />
           <Route path='*' element={<Home/>} />
         </Routes>
         <Footer />

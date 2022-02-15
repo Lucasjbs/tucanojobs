@@ -68,7 +68,7 @@ function RegisterCandidate() {
                             <input type="password" className="form-control rounded" placeholder="Senha" aria-label="Pesquisar"
                             aria-describedby="search-addon" onChange={(e) => {setPassword(e.target.value)}}/>
                             <br></br>
-                            <button type="button" className="btn btn-warning" onClick={register}>Registrar</button>
+                            <button type="button" className="btn btn-success" onClick={register}>Registrar</button>
                             <br></br>
                             <br></br>
                             <label className="danger-txt">{warningLabel}</label>

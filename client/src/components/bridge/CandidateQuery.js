@@ -10,6 +10,13 @@ function CandidateQuery() {
 
     const [bdData, setData] = useState([])
 
+    function dateConverter(date){
+        let formatDate = date.split('T')[0]
+        const ddMMYY = formatDate.split('-')
+        formatDate = ddMMYY[2] + "/" + ddMMYY[1] + "/" + ddMMYY[0]
+        return formatDate
+    }
+
     const submitQuerry = () => { 
         axios.get(`http://localhost:5000/database/search?dataDescripion=${description}`).then(function (response) {
             setData(response.data.slice(0,50))
@@ -35,12 +42,12 @@ function CandidateQuery() {
         return (
         <a href={"/candidate/details/" + value.user_id} 
         className="list-group-item list-group-item-action flex-column align-items-start card-layout" key={value.user_id}>
-            <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{value.full_name}</h5>
-                <small className="text-muted">3 days ago</small>
-            </div>
-            <p className="mb-1">{value.description}</p>
-            <small className="text-muted">{value.user_email}</small>
+        <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">{value.full_name}</h5>
+            <small className="text-muted">{dateConverter(value.resume_date)}</small>
+        </div>
+        <p className="mb-1">{value.user_title}</p>
+        <small className="text-muted">{value.user_tags}</small>
         </a>)
     })
 
